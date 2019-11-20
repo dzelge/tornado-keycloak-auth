@@ -5,7 +5,7 @@ from tornado import web, ioloop
 
 settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
-    "open_id_certs_url": "https://KEYCLOAK_SERVER/auth/realms/YOUR_REALM/protocol/openid-connect/certs"
+    "open_id_certs_url": "https://192.171.139.54.xip.io/auth/realms/master/protocol/openid-connect/certs"
 }
 
 
@@ -14,7 +14,12 @@ def make_app():
         (r"/", MainHandler),
     ], **settings)
 
+
 if __name__ == "__main__":
+    print("Starting localhost:6000")
     app = make_app()
-    app.listen(8888)
+    print("App created")
+    app.listen(6000)
+    print("Listening to 6000")
     ioloop.IOLoop.current().start()
+    print("localhost:6000 started")

@@ -4,6 +4,7 @@ import json
 from tornado import web, httpclient
 from jwt.algorithms import RSAAlgorithm
 
+
 class AuthenticatedRequestHandler(web.RequestHandler):
     # Decode the bearer and check if user has role to access
     # Token validity is automatically check
@@ -27,14 +28,15 @@ class AuthenticatedRequestHandler(web.RequestHandler):
             request = httpclient.HTTPRequest(
                 self.application.settings['open_id_certs_url'],
                 method='GET',
+                validate_cert=False
             )
-            response = httpclient.HTTPClient().fetch(request, raise_error=False)
+            response = httpclient.HTTPClient().fetch(request, raise_error=False, validate_cert=False)
             if response.code == 200:
                 jwk = json.loads(response.body.decode('utf-8'))
                 public_key = RSAAlgorithm.from_jwk(json.dumps(jwk['keys'][0]))
                 payload = jwt.decode(bearer, public_key, algorithms='RS256', options={'verify_aud': False})
             else:
-                raise ValueError(response.body.decode('utf-8')) 
+                raise ValueError(response.body.decode('utf-8'))
 
             httpclient.HTTPClient().close()
 
