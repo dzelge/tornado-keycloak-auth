@@ -18,8 +18,8 @@ class MainHandler(AuthenticatedRequestHandler):
         self.set_header('Content-type', 'application/json')
         self.set_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
         self.set_header('Access-Control-Allow-Headers',
-                        'Content-Type, Access-Control-Allow-Origin, Access-Control-Allow-Headers, X-Requested-By, '
-                        'Access-Control-Allow-Methods')
+                        'Content-Type, Access-Control-Allow-Credentials, Access-Control-Allow-Origin, '
+                        'Access-Control-Allow-Headers, X-Requested-By, Access-Control-Allow-Methods')
 
     def options(self, *args, **kwargs):
         self.set_status(204)
